@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "node": "^25.8.1",
+    "picocolors": "^1.1.1",
+    "unplugin": "^3.0.0"
+  }
+}
