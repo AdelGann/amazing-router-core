@@ -1,5 +1,5 @@
 import { logger } from "@amazing_router/utils";
-import { BuilderConfigInterface } from "./types.config";
+import { BuilderConfigInterface } from "@amazing_router/types/config.types";
 
 // default config
 const builder_config: BuilderConfigInterface = {
