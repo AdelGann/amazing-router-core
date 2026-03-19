@@ -1,9 +1,11 @@
 import { logger } from "@amazing_router/utils";
-import { BuilderConfigInterface } from "@amazing_router/config";
 import BuilderConfig from "@amazing_router/config/builder.config";
+import { BuilderConfigInterface } from "@amazing_router/config";
 
 import path from "node:path";
 import fs from "node:fs";
+
+import { Walker } from "./walker";
 
 class BuildRouter {
   private config: BuilderConfig;
@@ -35,7 +37,8 @@ class BuildRouter {
       const absolutePath = path.resolve(process.cwd(), folderPath);
 
       if (fs.existsSync(absolutePath)) {
-        this.walkDir(absolutePath);
+        const result = this.walkDir(absolutePath, this.config);
+        this.filesFound.push(...result);
       } else {
         logger.warn(
           `La carpeta configurada no existe y será ignorada: ${folderPath}`,
@@ -43,7 +46,10 @@ class BuildRouter {
       }
     }
   }
-  private walkDir(arg: unknown) {}
+
+  private walkDir(path: string, config: BuilderConfig): string[] {
+    return Walker(path, config);
+  }
 
   private loader() {}
 }
