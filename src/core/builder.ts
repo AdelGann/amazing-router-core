@@ -1,6 +1,6 @@
 import { logger } from "@amazing_router/utils";
 import BuilderConfig from "@amazing_router/config/builder.config";
-import { BuilderConfigInterface } from "@amazing_router/config";
+import { BuilderConfigInterface } from "@amazing_router/types";
 
 import path from "node:path";
 import fs from "node:fs";
