@@ -1,4 +1,16 @@
 {
+  "name": "amazing-router",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "devDependencies": {
     "@types/node": "^25.5.0",
     "@types/webpack": "^5.28.5",
@@ -14,6 +26,7 @@
     "webpack": ">=5.0.0"
   },
   "dependencies": {
+    "cac": "^7.0.0",
     "node": "^25.8.1",
     "picocolors": "^1.1.1",
     "unplugin": "^3.0.0"
