@@ -2,7 +2,7 @@
 
 A lightweight, zero-dependency, **File-System Based Router** engine for modern web frameworks. Inspired by Next.js and Nuxt, built for flexibility.
 
-[![npm version](https://img.shields.io/npm/v/amazing-router.svg)](https://www.npmjs.com/package/amazing-router)
+[![npm version](https://img.shields.io/npm/v/amazing-router.svg)](https://www.npmjs.com/package/@adelgann/amazing-router-core)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## ✨ Why Amazing Router?
