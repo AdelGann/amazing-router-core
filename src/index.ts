@@ -1,6 +1,6 @@
 /**
  * Amazing Router - File-System Based Routing Core
- * @author agannem (UCLA)
+ * @author Adel Gannem a.k.a im_adelg
  */
 
 /** Core Logic */
