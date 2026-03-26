@@ -1,5 +1,5 @@
 {
-  "name": "@AdelGann/amazing-router-core",
+  "name": "@amazing-router/core",
   "version": "1.0.0",
   "description": "Powerful file-system based router for modern frameworks",
   "main": "./dist/index.js",
