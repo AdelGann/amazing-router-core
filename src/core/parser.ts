@@ -101,14 +101,8 @@ export default class RouteParser {
     if (fileName === "layout" && relativePath.length > 0) {
       const directParent = relativePath[relativePath.length - 1];
       if (FOLDER_PATTERNS.group.test(directParent)) {
-        // Build the real parent's URL path (segments before the group folder)
-        const priorSegments = relativePath.slice(0, -1);
-        const priorWebSegments = priorSegments.filter(
-          (seg) => !FOLDER_PATTERNS.group.test(seg)
-        );
-        const priorPath = "/" + priorWebSegments.join("/");
-        const cleanPrior = priorPath === "//" ? "/" : priorPath;
-        return `__group__${cleanPrior}/${directParent}`;
+        // Virtual key: __group__(auth) — unique per group folder name
+        return `__group__${directParent}`;
       }
     }
 

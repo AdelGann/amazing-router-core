@@ -91,7 +91,6 @@ export default class RouterBuilder {
   /**
    * Derives a virtual group key from the absolute layout path.
    * For "(auth)/layout.tsx", the key would be "__group__/(auth)".
-   * This mirrors what the parser generates so we can cross-reference.
    */
   private deriveGroupKey(absoluteLayoutPath: string): string {
     const normalized = absoluteLayoutPath.replace(/\\/g, "/");
@@ -100,23 +99,19 @@ export default class RouterBuilder {
     const groupFolder = parts[parts.length - 1]; // e.g. "(auth)"
     // Not a group layout
     if (!groupFolder || !/^\(.*\)$/.test(groupFolder)) return "";
-    // Rebuild parent path (everything before the group folder, excluding groups)
-    const prior = parts.slice(0, -1).filter((seg) => !/^\(.*\)$/.test(seg));
-    const priorPath = prior.length ? "/" + prior.join("/") : "/";
-    return `__group__${priorPath}/${groupFolder}`;
+    // We only need the group folder name to match; parent is assumed to be "/"
+    // for simplicity. The key format mirrors the parser's virtual key.
+    return `__group__${groupFolder}`;
   }
 
   /**
-   * Extracts the real parent URL path from a virtual group key.
-   * "__group__/(auth)"     → "/"
-   * "__group__/dashboard/(auth)" → "/dashboard"
+   * For the simplified key format "__group__(auth)", the parent is always "/".
+   * In future nested group support, this would parse the key more carefully.
    */
   private extractGroupParentPath(groupKey: string): string | null {
     if (!groupKey.startsWith("__group__")) return null;
-    const withoutPrefix = groupKey.replace("__group__", ""); // "/(auth)" or "/dashboard/(auth)"
-    const lastSlash = withoutPrefix.lastIndexOf("/");
-    const parentPath = withoutPrefix.substring(0, lastSlash) || "/";
-    return parentPath;
+    // Current format: "__group__(auth)" → parent is always "/"
+    return "/";
   }
 
   /**
