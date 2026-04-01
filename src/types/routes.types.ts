@@ -13,9 +13,10 @@ export interface RouteNode {
 
   /**
    * The parsed, web-ready URL path for this route.
+   * Undefined for pathless group layout wrappers (route groups with a layout).
    * @example "/users/:id"
    */
-  path: string;
+  path?: string;
 
   /**
    * Extracted metadata from the page or layout file.

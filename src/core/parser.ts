@@ -48,7 +48,7 @@ export default class RouteParser {
     if (!routeNode) {
       routeNode = {
         id: this.generateRouteId(webPath),
-        path: webPath,
+        path: webPath.startsWith("__group__") ? undefined : webPath,
         meta: {},
       };
       this.routeMap.set(webPath, routeNode);
@@ -79,10 +79,9 @@ export default class RouteParser {
 
   /**
    * Transforms a physical file system path into a clean web-standard URL.
-   * It handles platform normalization (Windows/Linux), removes file names,
-   * ignores route groups, and transforms dynamic segments into router-compatible syntax.
-   * * @param absolutePath - The absolute path to be converted.
-   * @returns A normalized web URL (e.g., "/users/:id").
+   * Special case: layout.tsx files directly inside a route group folder (e.g., (auth)/layout.tsx)
+   * return a virtual key like "__group__/(auth)" to avoid colliding with their parent URL,
+   * and to allow the tree builder to wire them as pathless layout wrappers.
    */
   private buildWebPath(absolutePath: string): string {
     const webPath: string[] = [];
@@ -93,7 +92,25 @@ export default class RouteParser {
 
     const relativePath: string[] = normalizedRelative.split("/");
 
-    relativePath.pop();
+    relativePath.pop(); // remove filename
+
+    const fileName = path.parse(absolutePath).name;
+
+    // If a layout.tsx lives directly inside a group folder, it's a group layout wrapper.
+    // Give it a virtual key so it doesn't overwrite the parent URL node.
+    if (fileName === "layout" && relativePath.length > 0) {
+      const directParent = relativePath[relativePath.length - 1];
+      if (FOLDER_PATTERNS.group.test(directParent)) {
+        // Build the real parent's URL path (segments before the group folder)
+        const priorSegments = relativePath.slice(0, -1);
+        const priorWebSegments = priorSegments.filter(
+          (seg) => !FOLDER_PATTERNS.group.test(seg)
+        );
+        const priorPath = "/" + priorWebSegments.join("/");
+        const cleanPrior = priorPath === "//" ? "/" : priorPath;
+        return `__group__${cleanPrior}/${directParent}`;
+      }
+    }
 
     for (const item of relativePath) {
       if (FOLDER_PATTERNS.group.test(item)) continue;
