@@ -18,6 +18,9 @@ export default class RouterBuilder {
    */
   public buildTree(flatNodes: RouteNode[]): RouteNode[] {
     const sortedNodes = [...flatNodes].sort((a, b) => {
+      // Group wrappers (path=undefined) always go after real path nodes
+      if (a.path === undefined && b.path !== undefined) return 1;
+      if (a.path !== undefined && b.path === undefined) return -1;
       const aDepth = !a.path || a.path === "/" ? 0 : a.path.split("/").length;
       const bDepth = !b.path || b.path === "/" ? 0 : b.path.split("/").length;
       return aDepth - bDepth;
