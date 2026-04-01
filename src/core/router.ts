@@ -55,13 +55,10 @@ export default class RouterBuilder {
 
       // Group layout wrapper node (path is undefined → pathless route)
       if (node.path === undefined) {
-        const groupKey = this.deriveGroupKey(node.layoutPath!);
-        const parentPath = this.extractGroupParentPath(groupKey);
-        if (parentPath !== null && nodeMap.has(parentPath)) {
-          nodeMap.get(parentPath)!.children!.push(node);
-        } else {
-          tree.push(node);
-        }
+        // Group layouts are ALWAYS top-level siblings — they don't inherit from
+        // the root layout or any other layout. This matches Next.js behavior:
+        // a layout inside (auth)/ gives all auth routes their own isolated layout.
+        tree.push(node);
         continue;
       }
 
