@@ -1,6 +1,6 @@
 {
   "name": "@amazing-router/core",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "description": "Powerful file-system based router for modern frameworks",
   "type": "module",
   "main": "./dist/index.js",
