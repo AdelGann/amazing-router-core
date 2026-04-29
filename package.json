@@ -2,8 +2,8 @@
   "name": "@amazing-router/core",
   "version": "1.7.0",
   "description": "Powerful file-system based router for modern frameworks",
+  "type": "module",
   "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "bin": {
     "amazing": "./dist/cli.js"
@@ -32,21 +32,23 @@
   "homepage": "https://github.com/AdelGann/amazing-router-core#readme",
   "exports": {
     ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
+      "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     }
   },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "devDependencies": {
-    "@types/node": "^25.5.0",
+    "@types/node": "^22.5.0",
     "@types/webpack": "^5.28.5",
-    "tsup": "^8.5.1",
-    "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "tsup": "^8.3.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.2"
   },
   "scripts": {
     "build": "tsup src/index.ts src/cli.ts --format esm --dts --clean",
-    "dev": "tsup src/index.ts src/cli.ts --format cjs,esm --watch --dts",
+    "dev": "tsup src/index.ts src/cli.ts --format esm --watch --dts",
     "test": "node --import tsx --test src/tests/*.test.ts"
   },
   "peerDependencies": {
@@ -55,9 +57,7 @@
   },
   "dependencies": {
     "cac": "^7.0.0",
-    "node": "^25.8.1",
     "picocolors": "^1.1.1",
     "unplugin": "^3.0.0"
-  },
-  "type": "module"
+  }
 }
