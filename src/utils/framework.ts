@@ -55,6 +55,6 @@ export function getTemplateForFramework(
   // Default to React (.tsx) formatting
   return {
     extension: ".tsx",
-    content: `export const ${componentName} = () => {\n  return (\n    <div>${displayName}</div>\n  )\n};\n`
+    content: `export default function ${componentName}() {\n  return (\n    <div>${displayName}</div>\n  )\n}`
   };
 }
